@@ -114,4 +114,28 @@ public class AbstractMetadataRegistry implements AppMetadataRegistry {
 		retval = appModule.getProperties();
 		return retval;
 	}
+
+	@Override
+	public AppModule getModuleFromPathName(String pathName) {
+		AppModule retval = null;
+		if(pathName == null || "".equals(pathName) ){
+			return retval;
+		}
+		String moduleName = null;
+		String namespace = null;
+		int moduleStartIdx = pathName.lastIndexOf(".");
+		if(moduleStartIdx<=0){
+			moduleName = pathName;
+			namespace = "";
+		}else{
+			moduleName = pathName.substring(moduleStartIdx);
+			namespace = pathName.substring(0, moduleStartIdx);
+		}
+		
+		if(moduleName == null || "".equals(moduleName)){
+			return retval;
+		}
+		retval = getModule(namespace, moduleName);
+		return retval;
+	}
 }

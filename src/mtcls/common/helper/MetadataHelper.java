@@ -5,6 +5,7 @@ import java.util.List;
 import mtcls.common.model.AppModule;
 import mtcls.common.model.AppNamespace;
 import mtcls.common.model.AppProperty;
+import mtcls.common.model.app.DataTypeEnum;
 import mtcls.common.model.dto.AppModuleDto;
 import mtcls.common.model.dto.AppNamespaceDto;
 import mtcls.common.model.dto.AppPropertyDto;
@@ -41,14 +42,10 @@ public class MetadataHelper {
 	public static final String 	AP_ADD_DEFAULT_VALUE_DEFAULT = null; 
 	public static final String 	AP_EDIT_DEFAULT_VALUE_DEFAULT = null;
 	public static final String 	AP_SEARCH_DEFAULT_VALUE_DEFAULT = null; 
-	public static final String 	AP_LOOKUP_CRITERIA_DEFAULT = null;
-	public static final String 	AP_LOOKUP_CRITERIA_PAIR_DEFAULT = null; 
 	public static final String 	AP_LOOKUP_NAME_DEFAULT = null; 
 	public static final String 	AP_LOOKUP_PAIR_DEFAULT = null;
-	public static final String 	AP_REPOSITORY_DEFAULT = null; 
-	public static final String 	AP_UPDATE_REPOSITORY_DEFAULT = null;
-	public static final String 	AP_HISTORY_REPOSITORY_DEFAULT = null; 
-	public static final Integer AP_DECIMAL_PRECISION_DEFAULT = null;
+	public static final String 	AP_LOOKUP_SERVICE_NAME_DEFAULT = null; 
+	public static final Integer	AP_DECIMAL_PRECISION_DEFAULT = null;
 	public static final boolean AP_SORT_DESC_DEFAULT = false; 
 	public static final boolean AP_KEY_DEFAULT = false; 
 	public static final boolean AP_LOOKUP_DEFAULT = false; 
@@ -122,12 +119,18 @@ public class MetadataHelper {
 								properties);
 	}
 	
+	public static AppModule createDefaultModule(String namespace, String name){
+		AppNamespace ns = createAppNamespace(namespace);
+		return createDefaultModule(null, ns, name, AM_REPOSITORY_DEFAULT, AM_LABEL_DEFAULT, AM_GROUP_NAME_DEFAULT, AM_GROUP_LABEL_DEFAULT, null, null);
+	}
+	
 	public static AppModule createDefaultModule(AppModule parentModule, 
 							AppNamespace appNamespace, 
 							String name,
 							String label, 
 							String groupName, 
-							String groupLabel, 
+							String groupLabel,
+							String repository, 
 							List<AppModule> childModules,
 							List<AppProperty> properties){
 		return createAppModule(parentModule, 
@@ -136,7 +139,7 @@ public class MetadataHelper {
 							label, 
 							groupName, 
 							groupLabel, 
-							AM_REPOSITORY_DEFAULT, 
+							repository, 
 							AM_MODULE_WIDGET_DEFAULT, 
 							AM_SEARCH_WIDGET_DEFAULT, 
 							AM_LIST_WIDGET_DEFAULT, 
@@ -174,13 +177,9 @@ public class MetadataHelper {
 								String addDefaultValue, 
 								String editDefaultValue,
 								String searchDefaultValue, 
-								String lookupCriteria,
-								String lookupCriteriaPair, 
 								String lookupName, 
 								String lookupPair,
-								String repository, 
-								String updateRepository,
-								String historyRepository, 
+								String lookupServiceName, 
 								Integer decimalPrecision,
 								boolean sortDesc, 
 								boolean key, 
@@ -200,51 +199,49 @@ public class MetadataHelper {
 								boolean duplicatable,
 								boolean hidden, 
 								boolean unique){
-		return new AppPropertyDto(ID_UNDEFINED, 
-								name, 	
-								label, 
-								sequence, 
-								groupName, 
-								groupLabel, 
-								sortPriority, 
-								dataType, 
-								displayType, 
-								daoPropertyName, 
-								value, 
-								saveParameterType, 
-								width, 
-								minValue, 
-								maxValue, 
-								regexPattern, 
-								addDefaultValue, 
-								editDefaultValue, 
-								searchDefaultValue, 
-								lookupCriteria, 
-								lookupCriteriaPair, 
-								lookupName, 
-								lookupPair, 
-								repository, 
-								updateRepository, 
-								historyRepository, 
-								decimalPrecision, 
-								sortDesc, 
-								key, 
-								lookup, 
-								required, 
-								searchable, 
-								searchRange, 
-								searchParticipate, 
-								searchShowOnEmpty, 
-								listable, 
-								detailable, 
-								advancedSearch, 
-								editable, 
-								editableOnAdd, 
-								editableOnSearch, 
-								updatable, 
-								duplicatable, 
-								hidden, 
-								unique);
+		AppPropertyDto retval = new AppPropertyDto();
+		retval.setId(ID_UNDEFINED);
+		retval.setName(name);
+		retval.setLabel(label); 
+		retval.setSequence(sequence);
+		retval.setGroupName(groupName); 
+		retval.setGroupLabel(groupLabel); 
+		retval.setSortPriority(sortPriority); 
+		retval.setDataType(dataType); 
+		retval.setDisplayType(displayType); 
+		retval.setDaoPropertyName(daoPropertyName); 
+		retval.setValue(value); 
+		retval.setSaveParameterType(saveParameterType); 
+		retval.setWidth(width); 
+		retval.setMinValue(minValue); 
+		retval.setMaxValue(maxValue); 
+		retval.setRegexPattern(regexPattern); 
+		retval.setAddDefaultValue(addDefaultValue); 
+		retval.setEditDefaultValue(editDefaultValue); 
+		retval.setSearchDefaultValue(searchDefaultValue); 
+		retval.setLookupName(lookupName); 
+		retval.setLookupPair(lookupPair); 
+		retval.setLookupServiceName(lookupServiceName); 
+		retval.setDecimalPrecision(decimalPrecision); 
+		retval.setSortDesc(sortDesc); 
+		retval.setKey(key); 
+		retval.setLookup(lookup); 
+		retval.setRequired(required); 
+		retval.setSearchable(searchable); 
+		retval.setSearchRange(searchRange); 
+		retval.setSearchParticipate(searchParticipate); 
+		retval.setSearchShowOnEmpty(searchShowOnEmpty); 
+		retval.setListable(listable); 
+		retval.setDetailable(detailable); 
+		retval.setAdvancedSearch(advancedSearch); 
+		retval.setEditable(editable); 
+		retval.setEditableOnAdd(editableOnAdd); 
+		retval.setEditableOnSearch(editableOnSearch); 
+		retval.setUpdatable(updatable); 
+		retval.setDuplicatable(duplicatable); 
+		retval.setHidden(hidden); 
+		retval.setUnique(unique);
+		return retval;
 	}
 	
 	public static AppProperty createDefaultAppProperty(String name, 
@@ -263,10 +260,9 @@ public class MetadataHelper {
 			String addDefaultValue, 
 			String editDefaultValue,
 			String searchDefaultValue, 
-			String lookupCriteria,
-			String lookupCriteriaPair, 
 			String lookupName, 
 			String lookupPair,
+			String lookupServiceName, 
 			Integer decimalPrecision,
 			boolean sortDesc, 
 			boolean key, 
@@ -297,13 +293,9 @@ public class MetadataHelper {
 				addDefaultValue, 
 				editDefaultValue, 
 				searchDefaultValue, 
-				lookupCriteria, 
-				lookupCriteriaPair, 
 				lookupName, 
 				lookupPair, 
-				AP_REPOSITORY_DEFAULT, 
-				AP_UPDATE_REPOSITORY_DEFAULT, 
-				AP_HISTORY_REPOSITORY_DEFAULT,  
+				lookupServiceName, 
 				decimalPrecision, 
 				sortDesc, 
 				key, 
@@ -348,7 +340,7 @@ public class MetadataHelper {
 				groupName, 
 				groupLabel, 
 				sortPriority,
-				"String", 
+				DataTypeEnum.STRING.asString(), 
 				"Text", 
 				daoPropertyName,
 				width,
@@ -358,10 +350,9 @@ public class MetadataHelper {
 				addDefaultValue, 
 				editDefaultValue,
 				searchDefaultValue, 
-				AP_LOOKUP_CRITERIA_DEFAULT, 
-				AP_LOOKUP_CRITERIA_PAIR_DEFAULT, 
 				AP_LOOKUP_NAME_DEFAULT, 
 				AP_LOOKUP_PAIR_DEFAULT, 
+				AP_LOOKUP_SERVICE_NAME_DEFAULT, 
 				AP_DECIMAL_PRECISION_DEFAULT, 
 				sortDesc, 
 				key, 
@@ -400,7 +391,7 @@ public class MetadataHelper {
 				groupName, 
 				groupLabel, 
 				sortPriority,
-				"Date", 
+				DataTypeEnum.DATE.asString(), 
 				"Date", 
 				daoPropertyName,
 				width,
@@ -410,10 +401,9 @@ public class MetadataHelper {
 				addDefaultValue, 
 				editDefaultValue,
 				searchDefaultValue, 
-				AP_LOOKUP_CRITERIA_DEFAULT, 
-				AP_LOOKUP_CRITERIA_PAIR_DEFAULT, 
 				AP_LOOKUP_NAME_DEFAULT, 
 				AP_LOOKUP_PAIR_DEFAULT, 
+				AP_LOOKUP_SERVICE_NAME_DEFAULT, 
 				AP_DECIMAL_PRECISION_DEFAULT, 
 				sortDesc, 
 				key, 
@@ -425,7 +415,33 @@ public class MetadataHelper {
 				false, 
 				unique);
 	}
-	
+	public static AppProperty createDefaultIdProperty(String name){
+		AppProperty retval = createDefaultRealNumberProperty(name, 
+				name, 
+				null, 
+				AP_GROUP_NAME_DEFAULT, 
+				AP_GROUP_LABEL_DEFAULT, 
+				null, 
+				name, 
+				AP_WIDTH_DEFAULT, 
+				AP_MIN_VALUE_DEFAULT, 
+				AP_MAX_VALUE_DEFAULT, 
+				AP_REGEX_PATTERN_DEFAULT, 
+				AP_ADD_DEFAULT_VALUE_DEFAULT, 
+				AP_EDIT_DEFAULT_VALUE_DEFAULT, 
+				AP_SEARCH_DEFAULT_VALUE_DEFAULT, 
+				AP_SORT_DESC_DEFAULT, 
+				true, 
+				true, 
+				true, 
+				AP_SEARCH_RANGE_DEFAULT, 
+				true, 
+				true);
+		AppPropertyDto dto = (AppPropertyDto)retval;
+		dto.setHidden(true);
+		retval = dto;
+		return retval;
+	}
 	public static AppProperty createDefaultRealNumberProperty(String name, 
 			String label, 
 			Integer sequence,
@@ -453,7 +469,7 @@ public class MetadataHelper {
 				groupName, 
 				groupLabel, 
 				sortPriority,
-				"Number", 
+				DataTypeEnum.NUMBER.asString(), 
 				"Text", 
 				daoPropertyName,
 				width,
@@ -462,11 +478,10 @@ public class MetadataHelper {
 				regexPattern,
 				addDefaultValue, 
 				editDefaultValue,
-				searchDefaultValue, 
-				AP_LOOKUP_CRITERIA_DEFAULT, 
-				AP_LOOKUP_CRITERIA_PAIR_DEFAULT, 
+				searchDefaultValue,  
 				AP_LOOKUP_NAME_DEFAULT, 
 				AP_LOOKUP_PAIR_DEFAULT, 
+				AP_LOOKUP_SERVICE_NAME_DEFAULT, 
 				AP_DECIMAL_PRECISION_DEFAULT, 
 				sortDesc, 
 				key, 
@@ -506,7 +521,7 @@ public class MetadataHelper {
 				groupName, 
 				groupLabel, 
 				sortPriority,
-				"Number", 
+				DataTypeEnum.FLOAT.asString(), 
 				"Text", 
 				daoPropertyName,
 				null,
@@ -516,10 +531,9 @@ public class MetadataHelper {
 				addDefaultValue, 
 				editDefaultValue,
 				searchDefaultValue, 
-				AP_LOOKUP_CRITERIA_DEFAULT, 
-				AP_LOOKUP_CRITERIA_PAIR_DEFAULT, 
 				AP_LOOKUP_NAME_DEFAULT, 
 				AP_LOOKUP_PAIR_DEFAULT, 
+				AP_LOOKUP_SERVICE_NAME_DEFAULT, 
 				decimalPrecision,
 				sortDesc, 
 				key, 
@@ -549,12 +563,9 @@ public class MetadataHelper {
 			String addDefaultValue, 
 			String editDefaultValue,
 			String searchDefaultValue, 
-			String lookupCriteria,
-			String lookupCriteriaPair, 
 			String lookupName, 
 			String lookupPair,
-			String repository, 
-			String updateRepository,
+			String lookupServiceName, 
 			boolean sortDesc, 
 			boolean key, 
 			boolean required,
@@ -586,11 +597,10 @@ public class MetadataHelper {
 				addDefaultValue, 
 				editDefaultValue,
 				searchDefaultValue, 
-				lookupCriteria,
-				lookupCriteriaPair, 
 				lookupName, 
 				lookupPair,
-				null,
+				lookupServiceName,
+				AP_DECIMAL_PRECISION_DEFAULT, 
 				sortDesc, 
 				key, 
 				true, 

@@ -22,13 +22,9 @@ public class AppPropertyDto implements AppProperty{
     protected String addDefaultValue;
     protected String editDefaultValue;
     protected String searchDefaultValue;
-    protected String lookupCriteria;
-    protected String lookupCriteriaPair;
     protected String lookupName;
     protected String lookupPair;
-    protected String repository;
-    protected String updateRepository;
-    protected String historyRepository;
+    protected String lookupServiceName;
     protected Integer decimalPrecision;
     protected boolean sortDesc;    
 	protected boolean key;
@@ -49,6 +45,9 @@ public class AppPropertyDto implements AppProperty{
     protected boolean hidden;
     protected boolean unique;
     
+    public AppPropertyDto(){
+    	
+    }
 	/**
 	 * @param id
 	 * @param name
@@ -69,13 +68,9 @@ public class AppPropertyDto implements AppProperty{
 	 * @param addDefaultValue
 	 * @param editDefaultValue
 	 * @param searchDefaultValue
-	 * @param lookupCriteria
-	 * @param lookupCriteriaPair
 	 * @param lookupName
 	 * @param lookupPair
-	 * @param repository
-	 * @param updateRepository
-	 * @param historyRepository
+	 * @param lookupServiceName
 	 * @param decimalPrecision
 	 * @param sortDesc
 	 * @param key
@@ -102,10 +97,8 @@ public class AppPropertyDto implements AppProperty{
 			Object value, String saveParameterType, Integer width,
 			Double minValue, Double maxValue, String regexPattern,
 			String addDefaultValue, String editDefaultValue,
-			String searchDefaultValue, String lookupCriteria,
-			String lookupCriteriaPair, String lookupName, String lookupPair,
-			String repository, String updateRepository,
-			String historyRepository, Integer decimalPrecision,
+			String searchDefaultValue, String lookupName, String lookupPair,
+			String lookupServiceName, Integer decimalPrecision,
 			boolean sortDesc, boolean key, boolean lookup, boolean required,
 			boolean searchable, boolean searchRange, boolean searchParticipate,
 			boolean searchShowOnEmpty, boolean listable, boolean detailable,
@@ -132,13 +125,9 @@ public class AppPropertyDto implements AppProperty{
 		setAddDefaultValue(addDefaultValue);
 		setEditDefaultValue(editDefaultValue);
 		setSearchDefaultValue(searchDefaultValue);
-		setLookupCriteria(lookupCriteria);
-		setLookupCriteriaPair(lookupCriteriaPair);
 		setLookupName(lookupName);
 		setLookupPair(lookupPair);
-		setRepository(repository);
-		setUpdateRepository(updateRepository);
-		setHistoryRepository(historyRepository);
+		setLookupServiceName(lookupServiceName);
 		setDecimalPrecision(decimalPrecision);
 		setSortDesc(sortDesc);
 		setKey(key);
@@ -274,18 +263,6 @@ public class AppPropertyDto implements AppProperty{
 	public void setSearchDefaultValue(String searchDefaultValue) {
 		this.searchDefaultValue = searchDefaultValue;
 	}
-	public String getLookupCriteria() {
-		return lookupCriteria;
-	}
-	public void setLookupCriteria(String lookupCriteria) {
-		this.lookupCriteria = lookupCriteria;
-	}
-	public String getLookupCriteriaPair() {
-		return lookupCriteriaPair;
-	}
-	public void setLookupCriteriaPair(String lookupCriteriaPair) {
-		this.lookupCriteriaPair = lookupCriteriaPair;
-	}
 	public String getLookupName() {
 		return lookupName;
 	}
@@ -298,23 +275,11 @@ public class AppPropertyDto implements AppProperty{
 	public void setLookupPair(String lookupPair) {
 		this.lookupPair = lookupPair;
 	}
-	public String getRepository() {
-		return repository;
+	public String getLookupServiceName() {
+		return lookupServiceName;
 	}
-	public void setRepository(String repository) {
-		this.repository = repository;
-	}
-	public String getUpdateRepository() {
-		return updateRepository;
-	}
-	public void setUpdateRepository(String updateRepository) {
-		this.updateRepository = updateRepository;
-	}
-	public String getHistoryRepository() {
-		return historyRepository;
-	}
-	public void setHistoryRepository(String historyRepository) {
-		this.historyRepository = historyRepository;
+	public void setLookupServiceName(String lookupServiceName) {
+		this.lookupServiceName = lookupServiceName;
 	}
 	public Integer getDecimalPrecision() {
 		return decimalPrecision;

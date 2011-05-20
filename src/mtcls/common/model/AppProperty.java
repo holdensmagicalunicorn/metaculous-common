@@ -20,13 +20,9 @@ public interface AppProperty {
     public String getAddDefaultValue();
     public String getEditDefaultValue();
     public String getSearchDefaultValue();
-    public String getLookupCriteria();
-    public String getLookupCriteriaPair();
     public String getLookupName();
     public String getLookupPair();
-    public String getRepository();
-    public String getUpdateRepository();
-    public String getHistoryRepository();
+    public String getLookupServiceName();
     public Integer getDecimalPrecision();
     public boolean isSortDesc();    
 	public boolean isKey();

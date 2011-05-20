@@ -17,5 +17,7 @@ public interface AppMetadataRegistry {
 	
 	public AppModule getModule(String namespace, String moduleName);
 	
+	public AppModule getModuleFromPathName(String pathName);
+	
 	public List<AppProperty> getProperties(String namespace, String moduleName);
 }

@@ -128,7 +128,7 @@ public class AbstractMetadataRegistry implements AppMetadataRegistry {
 			moduleName = pathName;
 			namespace = "";
 		}else{
-			moduleName = pathName.substring(moduleStartIdx);
+			moduleName = pathName.substring(moduleStartIdx+1);
 			namespace = pathName.substring(0, moduleStartIdx);
 		}
 		

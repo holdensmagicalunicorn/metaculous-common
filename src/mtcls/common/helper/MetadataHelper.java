@@ -35,7 +35,7 @@ public class MetadataHelper {
 	public static final String 	AP_GROUP_LABEL_DEFAULT = ""; 
 	public static final Object 	AP_VALUE_DEFAULT = null; 
 	public static final String 	AP_SAVE_PARAMETERTYPE_DEFAULT = null;
-	public static final Integer AP_WIDTH_DEFAULT = null;
+	public static final Integer AP_WIDTH_DEFAULT = Integer.valueOf(50);
 	public static final Double 	AP_MIN_VALUE_DEFAULT = null; 
 	public static final Double 	AP_MAX_VALUE_DEFAULT = null; 
 	public static final String 	AP_REGEX_PATTERN_DEFAULT = null;
@@ -270,6 +270,7 @@ public class MetadataHelper {
 			boolean required,
 			boolean searchable, 
 			boolean searchRange, 
+			boolean isListable, 
 			boolean advancedSearch, 
 			boolean hidden, 
 			boolean unique){
@@ -305,7 +306,7 @@ public class MetadataHelper {
 				searchRange, 
 				AP_SEARCH_PARTICIPATE_DEFAULT, 
 				AP_SEARCH_SHOW_ON_EMPTY_DEFAULT, 
-				AP_LISTABLE_DEFAULT, 
+				isListable, 
 				AP_DETAILABLE_DEFAULT, 
 				advancedSearch, 
 				AP_EDITABLE_DEFAULT, 
@@ -316,7 +317,65 @@ public class MetadataHelper {
 				hidden, 
 				unique);
 	}
-	
+	public static AppProperty createDefaultHiddenStringProperty(String name, 
+			String label, 
+			Integer sequence,
+			String groupName, 
+			String groupLabel, 
+			Integer sortPriority, 
+			String daoPropertyName,
+			Integer width,
+			String regexPattern,
+			String addDefaultValue, 
+			String editDefaultValue,
+			String searchDefaultValue, 
+			boolean sortDesc, 
+			boolean key, 
+			boolean required, 
+			boolean listable, 
+			boolean advancedSearch, 
+			boolean unique){	
+		return createDefaultStringProperty(name, label, sequence, groupName, groupLabel, sortPriority, daoPropertyName, width, regexPattern, addDefaultValue, editDefaultValue, searchDefaultValue, sortDesc, key, required, listable, advancedSearch, true, unique);
+	}
+	public static AppProperty createDefaultStringProperty(String name, 
+			String label, 
+			Integer sequence,
+			String groupName, 
+			String groupLabel, 
+			Integer sortPriority, 
+			String daoPropertyName,
+			Integer width,
+			String regexPattern,
+			String addDefaultValue, 
+			String editDefaultValue,
+			String searchDefaultValue, 
+			boolean sortDesc, 
+			boolean key, 
+			boolean required, 
+			boolean advancedSearch, 
+			boolean unique){
+		return createDefaultStringProperty(name, label, sequence, groupName, groupLabel, sortPriority, daoPropertyName, width, regexPattern, addDefaultValue, editDefaultValue, searchDefaultValue, sortDesc, key, required, AP_LISTABLE_DEFAULT, advancedSearch, AP_HIDDEN_DEFAULT, unique);
+	}
+	public static AppProperty createDefaultStringProperty(String name, 
+			String label, 
+			Integer sequence,
+			String groupName, 
+			String groupLabel, 
+			Integer sortPriority, 
+			String daoPropertyName,
+			Integer width,
+			String regexPattern,
+			String addDefaultValue, 
+			String editDefaultValue,
+			String searchDefaultValue, 
+			boolean sortDesc, 
+			boolean key, 
+			boolean required, 
+			boolean listable, 
+			boolean advancedSearch, 
+			boolean unique){
+		return createDefaultStringProperty(name, label, sequence, groupName, groupLabel, sortPriority, daoPropertyName, width, regexPattern, addDefaultValue, editDefaultValue, searchDefaultValue, sortDesc, key, required, listable, advancedSearch, AP_HIDDEN_DEFAULT, unique);
+	}
 	public static AppProperty createDefaultStringProperty(String name, 
 								String label, 
 								Integer sequence,
@@ -332,8 +391,13 @@ public class MetadataHelper {
 								boolean sortDesc, 
 								boolean key, 
 								boolean required, 
+								boolean listable, 
 								boolean advancedSearch, 
+								boolean hidden, 
 								boolean unique){
+		if(width==null || width.intValue()<=0){
+			width = Integer.valueOf(50);
+		}
 		return createDefaultAppProperty(name, 
 				label, 
 				sequence,
@@ -360,12 +424,32 @@ public class MetadataHelper {
 				required,
 				true, 
 				false, 
+				listable, 
 				advancedSearch, 
-				false, 
+				hidden, 
 				unique);
 	}
 	
-	
+	public static AppProperty createDefaultHiddenDateProperty(String name, 
+			String label, 
+			Integer sequence,
+			String groupName, 
+			String groupLabel, 
+			Integer sortPriority, 
+			String daoPropertyName,
+			Integer width, 
+			String regexPattern,
+			String addDefaultValue, 
+			String editDefaultValue,
+			String searchDefaultValue, 
+			boolean sortDesc, 
+			boolean key, 
+			boolean required,
+			boolean searchRange, 
+			boolean advancedSearch, 
+			boolean unique){
+		return createDefaultDateProperty(name, label, sequence, groupName, groupLabel, sortPriority, daoPropertyName, width, regexPattern, addDefaultValue, editDefaultValue, searchDefaultValue, sortDesc, key, required, searchRange, advancedSearch, unique, AP_LISTABLE_DEFAULT, true);
+	}
 	public static AppProperty createDefaultDateProperty(String name, 
 			String label, 
 			Integer sequence,
@@ -384,6 +468,28 @@ public class MetadataHelper {
 			boolean searchRange, 
 			boolean advancedSearch, 
 			boolean unique){
+		return createDefaultDateProperty(name, label, sequence, groupName, groupLabel, sortPriority, daoPropertyName, width, regexPattern, addDefaultValue, editDefaultValue, searchDefaultValue, sortDesc, key, required, searchRange, advancedSearch, unique, AP_LISTABLE_DEFAULT, AP_HIDDEN_DEFAULT);
+	}
+	public static AppProperty createDefaultDateProperty(String name, 
+			String label, 
+			Integer sequence,
+			String groupName, 
+			String groupLabel, 
+			Integer sortPriority, 
+			String daoPropertyName,
+			Integer width, 
+			String regexPattern,
+			String addDefaultValue, 
+			String editDefaultValue,
+			String searchDefaultValue, 
+			boolean sortDesc, 
+			boolean key, 
+			boolean required,
+			boolean searchRange, 
+			boolean advancedSearch, 
+			boolean unique, 
+			boolean listable, 
+			boolean hidden){
 		width = (width==null && regexPattern!=null) ? Integer.valueOf(regexPattern.length()) : null;
 		return createDefaultAppProperty(name, 
 				label, 
@@ -411,18 +517,23 @@ public class MetadataHelper {
 				required,
 				true, 
 				searchRange, 
+				listable, 
 				advancedSearch, 
-				false, 
+				hidden, 
 				unique);
 	}
 	public static AppProperty createDefaultIdProperty(String name){
+		return createDefaultIdProperty(name, name, null);
+	}
+	
+	public static AppProperty createDefaultIdProperty(String name, String daoPropertyName, Integer sequence){
 		AppProperty retval = createDefaultRealNumberProperty(name, 
 				name, 
-				null, 
+				sequence, 
 				AP_GROUP_NAME_DEFAULT, 
 				AP_GROUP_LABEL_DEFAULT, 
 				null, 
-				name, 
+				daoPropertyName, 
 				AP_WIDTH_DEFAULT, 
 				AP_MIN_VALUE_DEFAULT, 
 				AP_MAX_VALUE_DEFAULT, 
@@ -435,6 +546,7 @@ public class MetadataHelper {
 				true, 
 				true, 
 				AP_SEARCH_RANGE_DEFAULT, 
+				AP_LISTABLE_DEFAULT, 
 				true, 
 				true);
 		AppPropertyDto dto = (AppPropertyDto)retval;
@@ -461,6 +573,7 @@ public class MetadataHelper {
 			boolean required,
 			boolean searchable, 
 			boolean searchRange, 
+			boolean listable, 
 			boolean advancedSearch, 
 			boolean unique){
 		return createDefaultAppProperty(name, 
@@ -489,6 +602,7 @@ public class MetadataHelper {
 				required,
 				searchable, 
 				searchRange, 
+				listable, 
 				advancedSearch, 
 				false, 
 				unique);
@@ -513,6 +627,7 @@ public class MetadataHelper {
 			boolean required,
 			boolean searchable, 
 			boolean searchRange, 
+			boolean isListable, 
 			boolean advancedSearch, 
 			boolean unique){
 		return createDefaultAppProperty(name, 
@@ -541,6 +656,7 @@ public class MetadataHelper {
 				required,
 				searchable, 
 				searchRange, 
+				isListable, 
 				advancedSearch, 
 				false, 
 				unique);
@@ -607,6 +723,7 @@ public class MetadataHelper {
 				required,
 				searchable, 
 				false, 
+				listable, 
 				advancedSearch, 
 				false, 
 				unique);

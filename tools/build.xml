@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="fierce-uifw-common" default="deploy" basedir=".">
+<project name="metaculous-common" default="deploy" basedir=".">
 	
 	<property environment="env" />
 	<property file="build.properties" />	

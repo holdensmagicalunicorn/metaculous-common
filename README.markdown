@@ -44,8 +44,11 @@ This project assumes you are developing with Eclipse, Google's GWT Plugin for Ec
 Google Web Toolkit (GWT)
 
 * [GWT Home Page] (http://code.google.com/webtoolkit/ "GWT Homepage")
+
 Ext-GWT is a ui component library developed and licensed by Sencha.
+
 [Sencha Ext-GWT Homepage] (http://www.sencha.com/Ext-GWT "Sencha Ext-GWT Homepage")
 
 * Alberto Artasanchez
+
 [Alberto's Linked-In Page](http://www.linkedin.com/in/artasanchez "Alberto Artasanchez")
